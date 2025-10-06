@@ -1,0 +1,1 @@
+<button type="text" class="border rounded-full p-2 text-green-500 bg-green-100" >Normal</button

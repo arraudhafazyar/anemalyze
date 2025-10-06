@@ -1,0 +1,1 @@
+<button type="text" class="border rounded-full p-2 text-red-400 bg-red-200" >Anemia</button
