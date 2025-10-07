@@ -24,7 +24,7 @@
             </div>
         </div>
 
-    <h2 class="rounded-lg bg-[#73946B] text-white font-semibold p-2 px-6 my-4 ">Riwayat kesehatan</h2>
+    <h2 class="rounded-lg bg-[#73946B] text-white font-semibold p-2 px-6 my-4 m-4">Riwayat kesehatan</h2>
         <div class="mx-8 mt-4 grid grid-cols-2 gap-4">
             <div class="flex flex-col col-span-2">
                 <label for="detail">Detail anamnesis</label>
@@ -34,7 +34,7 @@
         <div class="mx-8">
             <div class="flex space-x-20 flex-wrap mb-4">
                 <x-riwayat-kehamilan></x-riwayat-kehamilan>
-                <x-takikardia></x-takikardia> 
+                <x-takikardia></x-takikardia>
                 <x-transfusi-darah></x-transfusi-darah>
                 <x-hipertensi></x-hipertensi>
                 <x-kebiasaan-merokok></x-kebiasaan-merokok> </div>

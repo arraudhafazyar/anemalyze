@@ -3,38 +3,23 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Pemeriksaan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
 
-class LoginController extends Controller
+class HomeController extends Controller
 {
-    public function authenticate(Request $request): RedirectResponse
-    {
-        $credentials = $request->validate([
-            'username' => ['required', 'username'],
-            'password' => ['required'],
-        ]);
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
-            return redirect()->intended('home');
-        }
-
-        return back()->withErrors([
-            'username' => 'The provided credentials do not match our records.',
-        ])->onlyInput('username');
-    }
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('login', ['title' => 'Login']);
     }
 
+    public function home(){
+        return view('home', ['title' => 'Home',
+        'pemeriksaans'=>Pemeriksaan::filter(request(['search', 'pasien', 'anamnesis']))->latest()->paginate(7)->withQueryString()]);
+    }
     /**
      * Show the form for creating a new resource.
      */

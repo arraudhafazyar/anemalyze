@@ -8,6 +8,13 @@ export default defineConfig({
             'resources/css/app.css',
             'resources/js/app.js',
         ]),
-        tailwindcss(),  
+        tailwindcss(),
     ],
+    server: {
+        host: 'anemalyze.test',
+        port: 5173, // ini port Vite (frontend hot reload)
+        hmr: {
+            host: 'anemalyze.test',
+        },
+    },
 });

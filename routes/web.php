@@ -1,21 +1,27 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Models\Pasien;
 use App\Models\Anamnesis;
-use App\Models\Pemeriksaan;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('login', ['title' => 'Login']);
-});
-Route::post('/', function () {
-    return view('login', ['title' => 'Login', LoginController::class, 'authentication']);
+
+
+// Route::post('/', function () {
+//     return view('login', ['title' => 'Login', LoginController::class, 'authentication']);
+// });
+Route::middleware('guest')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+
 });
 
-Route::get('/home', function () {
-    return view('home', ['title' => 'Home', 'pemeriksaans'=>Pemeriksaan::filter(request(['search', 'pasien', 'anamnesis']))->latest()->paginate(7)->withQueryString()]);
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/home', [HomeController::class, 'home'])->name('home');
 });
+
 // Route::get('/home/{pasien:slug}', function(Pemeriksaan $pemeriksaan){
 //     return view('detail', ['title' => 'Detail Pasien', 'pemeriksaan'=>$pemeriksaan]);
 // });
