@@ -12,7 +12,6 @@ class Pasien extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'jenis_kelamin',
         'tempat_lahir',
         'tanggal_lahir',
         'phone_number'
@@ -23,14 +22,4 @@ class Pasien extends Model
     public function anamneses(): HasMany{
         return $this->hasMany(Anamnesis::class, 'pasien_id');
     }
-//     protected function scopeFilter(Builder $query, array $filters): void{
-//         $query->when($filters['search'] ?? false,
-//         fn ($query, $search)=>
-//                 $query->where('name', 'like', '%'  . $search . '%')
-//         );
-//         $query->when($filters['pasien'] ?? false,
-//         fn ($query, $category)=>
-//                 $query->whereHas('pasien', fn($query) => $query->where('slug', $category))
-//         );
-// };
 }

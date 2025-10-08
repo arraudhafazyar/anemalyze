@@ -2,26 +2,21 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Pasien;
 use App\Models\Anamnesis;
-use App\Models\Pemeriksaan;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class DetailController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('login', ['title' => 'Login']);
+        //
     }
 
-    public function home(){
-        return view('home', ['title' => 'Home',
-        'pemeriksaans'=>Pemeriksaan::filter(request(['search', 'tanggal', 'status']))->latest()->paginate(10)->withQueryString()]);
-    }
     /**
      * Show the form for creating a new resource.
      */
@@ -41,13 +36,15 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pasien $pasien, $anamnesis_id){
-        $anamnesis = Anamnesis::find($anamnesis_id);
-        return view ('detail', 
-        ['title' => 'Detail Pasien', 
-        'pasien'=> $pasien, 
-        'anamnesis'=> $anamnesis]);
+    public function show(Pasien $pasien, Anamnesis $anamnesis)
+{
+    // Pastikan anamnesis ini memang milik pasien tersebut
+    if ($anamnesis->pasien_id !== $pasien->id) {
+        abort(404); // biar aman, jangan tampilkan data orang lain
     }
+
+    return view('detail', compact('pasien', 'anamnesis'));
+}
 
     /**
      * Show the form for editing the specified resource.

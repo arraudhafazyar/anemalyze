@@ -2,6 +2,7 @@
 <x-layout :title="$title">
     <div class="m-4">
         <h2 class="rounded-lg bg-[#73946B] text-white font-semibold p-2 px-6 my-4 ">Data Diri Pasien</h2>
+        <form action="/detail" method="POST">
         <div class="mx-4 grid grid-cols-2 gap-4">
             <div class="flex flex-col">
                 <label for="nama">Nama Pasien</label>
@@ -46,5 +47,6 @@
                 </div>
             </div>
         </div>
+    </form>
 </div>
 </x-layout>

@@ -11,7 +11,7 @@
             </div>
                 <div class="flex flex-col col-span-2">
                     <p class="font-medium">Detail anamnesis</p>
-                    <textarea name="keluhan" id="keluhan" class="w-full h-32  rounded-lg shadow-xl bg-[#B0DB9C] p-3 active:border-none text-sm">whiaefiwaeo</textarea>
+                    <textarea name="keluhan" id="keluhan" class="w-full h-32  rounded-lg shadow-xl bg-[#B0DB9C] p-3 active:border-none text-sm">{{ $anamnesis->keluhan }}</textarea>
                     <div class="flex space-x-16 mb-4">
                     <x-riwayat-kehamilan></x-riwayat-kehamilan>
                     <x-takikardia></x-takikardia> <x-hipertensi> </x-hipertensi></div>

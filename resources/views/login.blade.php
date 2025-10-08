@@ -13,7 +13,7 @@
     <div class="flex justify-center items-center min-h-screen">
         <div class="border-2 rounded-2xl border-[#B0DB9C] p-8">
         <img src="/img/anemalayze-high-resolution-logo-transparent.png" alt="Logo Anemalyze" class="w-52 mb-8">
-        <form action="{{route ('home')}}" method="POST">
+        <form action="/" method="POST">
             @csrf
             <input type="hidden" name="id" id="id">
                     <div class="mb-3 flex flex-col">
@@ -30,9 +30,7 @@
                     @error('password')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
                     @enderror
-                <a href="{{ route('home')}}">
             <button type="submit" class="bg-[#73946B] text-white font-bold rounded-full w-full p-2 m-auto block mt-10"> Login
-                </a>
             </button>
         </form>
         </div>

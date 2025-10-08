@@ -2,28 +2,36 @@
 <div class="flex justify-between items-center m-4">
     <img src="/img/anemalayze-high-resolution-logo-transparent.png" alt="Logo Anemalyze" class="w-50">
     <form action="/home" method="get">
-        {{-- @if (request('pemeriksaan.pasien.name'))
+        @csrf
+        @if (request('pemeriksaan.pasien.name'))
         <input type="hidden" name="name" value="{{ request('pemeriksaan.pasien.name') }}">
-        @endif --}}
+        @endif
         <div class="rounded-full bg-gray-50 border border-[#888888] p-1 px-2.5 outline:none">
             <i class="fas fa-search text-[#888888] mr-1"></i>
             <label for="search" class="form-label"></label>
             <input type="text" class="form-control text-sm outline-none pr-52" placeholder="cari nama pasien" id="search" name="search">
         </div>
         </form>
-        <div class="flex items-center gap-2 text-[#888888]">
+        <form action="{{ route ('home') }}" method="GET" class="flex items-center gap-2 text-[#888888]" id="filterForm">
             <h3 class="text-m text-black">Filter Berdasarkan:</h3>
             <div class="rounded border p-1 px-2 hover:border-[#B0DB9C] ">
             <label for="tanggal" class="text-sm"></label>
-            <input id="tanggal" class="text-sm font-light outline-none" type="date" placeholder="Tanggal" onfocus="this.showPicker()" >
+            <input type="date" name="tanggal" value="{{ request('tanggal') }}">
         </div>
         <div class="rounded border p-1 px-2 hover:border-[#B0DB9C]">
-            <select name="status" id="status" class=" text-sm outline-none">
+            <select name="status" id="status" class=" text-sm outline-none" >
                 <option value="Status Anemia" disabled selected>Status Anemia</option>
-                <option value="anemia">Anemia</option>
-                <option value="normal">Normal</option>
+                <option value="Normal" {{ request('status') == 'Normal' ? 'selected' : '' }}>Normal</option>
+                <option value="Normal" {{ request('status') == 'Anemia' ? 'selected' : '' }}>Anemia</option>
             </select>
+        </form>
         </div>
+        <form action="{{ route ('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="rounded border p-1 px-2 hover:border-[#B0DB9C]">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+        </form>
 </div>
 </div>
 <div class="flex justify-end m-4">
@@ -65,5 +73,13 @@
 </table>
     <div class="mt-4">{{ $pemeriksaans->links() }}</div>
 </div>  
+<script>
+    document.querySelectorAll('#filterForm input, #filterForm select').forEach(el => {
+        el.addEventListener('change', () => {
+            document.getElementById('filterForm').submit();
+        });
+    });
+</script>
+
 
 </x-layout>

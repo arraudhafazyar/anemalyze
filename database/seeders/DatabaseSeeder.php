@@ -22,10 +22,12 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'admin1',
             'username' => 'iasksadn',
+            'password' => 'jyacantik'
         ]);
         User::factory()->create([
             'name' => 'admin2',
             'username' => 'iadjyand',
+            'password' => 'jyacantik'
         ]);
 
         Pemeriksaan::factory(10)->recycle([

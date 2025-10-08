@@ -32,9 +32,15 @@ class Pemeriksaan extends Model
         fn ($query, $category)=>
                 $query->whereHas('pasien', fn($query) => $query->where('slug', $category))
         );
-        // $query->when($filters['author'] ?? false,
-        // fn ($query, $author)=>
-        //         $query->whereHas('author', fn($query) => $query->where('username', $author))
-        // );
-    }
+        $query->when($filters['tanggal'] ?? false, 
+    fn($query, $tanggal) => 
+        $query->whereDate('created_at', $tanggal)
+        );
+
+        $query->when($filters['status'] ?? false, 
+            fn($query, $status) => 
+                $query->where('status_anemia', $status)
+        );
+
+        }
 }
