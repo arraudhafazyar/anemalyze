@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Pasien;
+use App\Models\Pemeriksaan;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -23,7 +25,9 @@ class Anamnesis extends Model
     public function pasien():BelongsTo{
         return $this->belongsTo(Pasien::class);
     }
-    public function pemeriksaans():HasMany{
-        return $this->hasMany(Pemeriksaan::class, 'anamnesis_id');
+    public function pemeriksaan(): HasOne
+    {
+        return $this->hasOne(Pemeriksaan::class);
     }
+
 }

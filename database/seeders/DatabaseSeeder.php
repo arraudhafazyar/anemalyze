@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-    
+
         // User::factory(10)->create();
 
         User::factory()->create([
@@ -30,10 +30,16 @@ class DatabaseSeeder extends Seeder
             'password' => 'jyacantik'
         ]);
 
-        Pemeriksaan::factory(10)->recycle([
-            Pasien::factory(10)->recycle(
-                Anamnesis::factory(10)->create())->create()]
-        )->create();
 
+    // Pasien::factory(10)
+    //     ->has(Anamnesis::factory()->count(2))
+    //     ->has(Pemeriksaan::factory()->count(3))
+    //     ->create();
+    //     }
+
+    Pasien::factory(10)
+            ->has(Anamnesis::factory()->count(rand(1, 3)))
+            ->has(Pemeriksaan::factory()->count(rand(1, 3)))
+            ->create();
     }
-}   
+}

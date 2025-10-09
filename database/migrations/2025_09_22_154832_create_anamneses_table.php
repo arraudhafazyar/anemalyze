@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('pasien_id')->constrained(
                 table: 'pasiens',
                 indexName: 'anamnesis_pasien_id'
-            );          
+            );
         $table->timestamps();
         });
     }

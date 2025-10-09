@@ -11,7 +11,7 @@
             </div>
                 <div class="flex flex-col col-span-2">
                     <p class="font-medium">Detail anamnesis</p>
-                    <textarea name="keluhan" id="keluhan" class="w-full h-32  rounded-lg shadow-xl bg-[#B0DB9C] p-3 active:border-none text-sm">{{ $anamnesis->keluhan }}</textarea>
+                    <textarea name="keluhan" id="keluhan" class="w-full h-32  rounded-lg shadow-xl bg-[#B0DB9C] p-3 active:border-none text-sm"> {{ $anamnesis->keluhan ?? 'Belum ada keluhan' }}</textarea>
                     <div class="flex space-x-16 mb-4">
                     <x-riwayat-kehamilan></x-riwayat-kehamilan>
                     <x-takikardia></x-takikardia> <x-hipertensi> </x-hipertensi></div>
@@ -26,17 +26,22 @@
                 </div>
                 </div>
                 </div>
-    <div class="flex justify-between mb-4">
+    <div class="flex justify-between my-4">
     <div>
-    <div class="flex items-center gap-2 text-[#888888] mt-4">
-        <h3 class="text-m text-black">Filter Berdasarkan:</h3>
-            <div class="rounded border p-1 px-2">
-                <button type="date" class="text-sm font-light ">Tanggal</button>
-                <i class="fa-solid fa-circle-chevron-down"></i></div>
-            <div class="rounded border p-1 px-2">
-                <button class="text-sm font-light " >Status Anemia</button>
-                <i class="fa-solid fa-circle-chevron-down"></i></div>
-    </div>
+    <form action="{{ route ('home') }}" method="GET" class="flex items-center gap-2 text-[#888888]" id="filterForm">
+            <h3 class="text-m text-black">Filter Berdasarkan:</h3>
+            <div class="rounded border p-1 px-2 hover:border-[#B0DB9C] ">
+                <label for="tanggal" class="text-sm"></label>
+                <input type="date" name="tanggal" value="{{ request('tanggal') }}">
+            </div>
+            <div class="rounded border p-1 px-2 hover:border-[#B0DB9C]">
+                <select name="status" id="status" class=" text-sm outline-none" >
+                    <option value="Status Anemia" disabled selected>Status Anemia</option>
+                    <option value="Normal" {{ request('status') == 'Normal' ? 'selected' : '' }}>Normal</option>
+                    <option value="Anemia" {{ request('status') == 'Anemia' ? 'selected' : '' }}>Anemia</option>
+                </select>
+            </div>
+        </form>
     </div>
     <div class="flex justify-end mb-4">
         <div class="rounded-full p-2 px-2 bg-[#73946B] text-white">
@@ -45,7 +50,7 @@
         </div>
     </div>
     </div>
-    
+
 <table class="min-w-full">
     <thead class="bg-[#B0DB9C] text-white rounded">
     <tr>
@@ -64,9 +69,9 @@
         <td class="p-3 text-center text-sm font-medium w-[15%]">78</td>
         <td class="p-3 text-center text-xs font-medium w-[20%%"><x-normal-button></x-normal-button></td>
         <td class="p-3 text-center text-sm font-medium w-[5%] text-gray-500"> <i class="fa-solid fa-circle-info"></i></td>
-    </tr>   
+    </tr>
     </tbody>
 </table>
-</div>  
+</div>
 </div>
 </x-layout>

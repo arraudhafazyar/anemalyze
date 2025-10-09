@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class AnamnesisController extends Controller
 {
-    
+
     public function store(Request $request){
         $request->validate([
             'kehamilan'=> 'required|in:Nulligravida, primigravida, Multigravida',
@@ -17,7 +17,7 @@ class AnamnesisController extends Controller
             'kebiasaan_merokok' => 'required|in:Pasif, Aktif, Tidak Merokok',
             'keluhan' => 'required|string',
         ]);
-        
+
         Anamnesis::create([
         'kehamilan' => $request->riwayat,
         'takikardia' =>$request->takikardia,
@@ -26,5 +26,9 @@ class AnamnesisController extends Controller
         'kebiasaan_merokok'=>$request->merokok,
         'keluhan'=>$request->detail,
     ]);
+    }
+
+    public function show(Anamnesis $anamnesis){
+        return view('detail', ['title' => 'Detail Pasien', 'anamnesis'=>$anamnesis]);
     }
 }

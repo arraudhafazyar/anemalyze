@@ -20,7 +20,7 @@ return new class extends Migration
                 table: 'pasiens',
                 indexName: 'pemeriksaan_pasien_id'
             );
-            $table->foreignId('anamnesis_id')->constrained(
+            $table->foreignId('anamnesis_id')->unique()->constrained(
                 table: 'anamneses',
                 indexName: 'pemeriksaan_anamnesis_id'
             );
