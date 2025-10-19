@@ -21,7 +21,6 @@ class PasienFactory extends Factory
         $prefix = fake()->randomElement($prefixes);
         return [
         'name' => $name = fake()->name(),
-        // 'jenis_kelamin' =>fake()->randomElement(['Laki-laki', 'Perempuan']),
         'tempat_lahir' => fake()->city(),
         'tanggal_lahir' =>fake() ->date(),
         'phone_number' => $prefix . fake()->numerify('########'),

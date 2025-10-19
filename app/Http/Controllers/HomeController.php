@@ -41,12 +41,8 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pasien $pasien, $anamnesis_id){
-        $anamnesis = Anamnesis::find($anamnesis_id);
-        return view ('detail', 
-        ['title' => 'Detail Pasien', 
-        'pasien'=> $pasien, 
-        'anamnesis'=> $anamnesis]);
+    public function show(){
+
     }
 
     /**

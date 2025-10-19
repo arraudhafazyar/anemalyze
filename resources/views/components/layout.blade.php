@@ -11,7 +11,10 @@
 </head>
 <body>
     {{ $slot }}
-    {{-- <script>
+</body>
+</html>
+
+{{-- <script>
     const input = document.getElementById('tanggal');
     input.addEventListener('input', function() {
         if (this.value.trim() !== "") {
@@ -23,5 +26,3 @@
         }
     });
     </script> --}}
-</body>
-</html>

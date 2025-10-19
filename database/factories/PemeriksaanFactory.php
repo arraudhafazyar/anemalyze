@@ -16,15 +16,15 @@ class PemeriksaanFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    
+
     public function definition(): array
     {
         return [
-        'pasien_id' => Pasien::factory(),
-        'anamnesis_id' => Anamnesis::factory(),
+        'anamnesis_id' => Anamnesis::inRandomOrder()->first()->id ?? Anamnesis::factory(),
+        'pasien_id' => Anamnesis::inRandomOrder()->first()->pasien_id ?? Pasien::factory(),
         'heart_rate' => fake()->numberBetween(80, 130),
         'spo2' => fake()->numberBetween(90, 100),
-        'status_anemia' => fake()->randomElement(['Anemia', 'Normal']) 
+        'status_anemia' => fake()->randomElement(['Anemia', 'Normal'])
         ];
     }
 

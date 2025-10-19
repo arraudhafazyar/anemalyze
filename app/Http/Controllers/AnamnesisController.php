@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pasien;
 use App\Models\Anamnesis;
 use Illuminate\Http\Request;
 
@@ -31,4 +32,26 @@ class AnamnesisController extends Controller
     public function show(Anamnesis $anamnesis){
         return view('detail', ['title' => 'Detail Pasien', 'anamnesis'=>$anamnesis]);
     }
-}
+
+    public function edit(Pasien $pasien, Anamnesis $anamnesis)
+    {
+        return view('anamnesis.edit', compact('pasien', 'anamnesis'));
+    }
+
+    public function update(Request $request, Pasien $pasien, Anamnesis $anamnesis)
+    {
+        $validated = $request->validate([
+            'keluhan' => 'required|string',
+            'riwayat' => 'required|string',
+            'takikardia' => 'required|string',
+            'hipertensi' => 'required|string',
+            'merokok' => 'required|string',
+            'transfusi' => 'required|string',
+        ]);
+
+        $anamnesis->update($validated);
+
+        return redirect()->route('anamnesis.show', [$pasien->id, $anamnesis->id])
+                        ->with('success', 'Data anamnesis berhasil diperbarui!');
+    }
+    }

@@ -22,7 +22,7 @@
                 <select name="status" id="status" class=" text-sm outline-none" >
                     <option value="Status Anemia" disabled selected>Status Anemia</option>
                     <option value="Normal" {{ request('status') == 'Normal' ? 'selected' : '' }}>Normal</option>
-                    <option value="Anemias" {{ request('status') == 'Anemia' ? 'selected' : '' }}>Anemia</option>
+                    <option value="Anemia" {{ request('status') == 'Anemia' ? 'selected' : '' }}>Anemia</option>
                 </select>
             </div>
         </form>

@@ -21,23 +21,20 @@ class pasienController extends Controller
         ]);
     }
 
-    public function show(Pasien $pasien, Anamnesis $anamnesis)
+    public function show(Pasien $pasien, $anamnesis_id, )
     {
-        // // $anamnesis = Anamnesis::find($anamnesis->id);
-        // $pemeriksaan = $anamnesis->pemeriksaan;
-        // $anamnesis = $pasien->anamneses()->where('id', $anamnesis->id)->first();
+        #tampilkan anamnesis milik pasien saja
+        $anamnesis = $pasien->anamneses()->findOrFail($anamnesis_id); // langsung 404 jika bukan milik pasien
+        $anamnesis->load('pemeriksaan');
 
-        $anamnesis = $pasien->anamneses()
-        ->where('id', $anamnesis->id)
-        ->first();
-
-        $pemeriksaan = $anamnesis ? $anamnesis->pemeriksaan : null;
+        # tampilkan semua pemeriksaan milik pasien
+        $pemeriksaans = $pasien->anamneses()->with('pemeriksaan')->get();
 
         return view('detail',
         ['pasien'=> $pasien,
         'anamnesis'=> $anamnesis,
-        'pemeriksaan'=>$pemeriksaan,
-        'title' => 'Detail Pasien']);
+        'pemeriksaans'=>$pemeriksaans,
+        'title' => 'Detail Pasien'], compact('pasien', 'anamnesis'));
     }
 
 

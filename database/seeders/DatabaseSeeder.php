@@ -16,9 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-        // User::factory(10)->create();
-
         User::factory()->create([
             'name' => 'admin1',
             'username' => 'iasksadn',
@@ -30,16 +27,21 @@ class DatabaseSeeder extends Seeder
             'password' => 'jyacantik'
         ]);
 
+    $pasiens = Pasien::factory(5)->create();
 
-    // Pasien::factory(10)
-    //     ->has(Anamnesis::factory()->count(2))
-    //     ->has(Pemeriksaan::factory()->count(3))
-    //     ->create();
-    //     }
+    // Setiap pasien punya beberapa anamnesis
+    foreach ($pasiens as $pasien) {
+        $anamneses = Anamnesis::factory(3)->create([
+            'pasien_id' => $pasien->id,
+        ]);
 
-    Pasien::factory(10)
-            ->has(Anamnesis::factory()->count(rand(1, 3)))
-            ->has(Pemeriksaan::factory()->count(rand(1, 3)))
-            ->create();
+        // Setiap anamnesis punya 1 pemeriksaan
+        foreach ($anamneses as $anamnesis) {
+            Pemeriksaan::factory()->create([
+                'anamnesis_id' => $anamnesis->id,
+                'pasien_id' => $pasien->id,
+            ]);
+        };
+    }
     }
 }

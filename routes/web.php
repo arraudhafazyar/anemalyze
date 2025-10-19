@@ -20,16 +20,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-// Route::get('/home/{pasien:slug}', function(Pemeriksaan $pemeriksaan){
-//     return view('detail', ['title' => 'Detail Pasien', 'pemeriksaan'=>$pemeriksaan]);
-// });
+Route::get('/home/{pasien:slug}/{anamnesis}', [pasienController::class, 'show'])->name('home.show');
 
-Route::get('/home/{pasien:slug}/{anamnesis}', [pasienController::class, 'show']);
 
 
 Route::post('/pasien-baru', [AnamnesisController::class, 'store'])->name('anamnesis.store');
 Route::get('/pasien-baru', [pasienController::class, 'create']);
-
-Route::get('/detail', function () {
-    return view('detail', ['title' => 'Detail Pasien']);
-});
+Route::get('/home/{pasien:slug}/{anamnesis}/edit', [AnamnesisController::class, 'edit'])->name('anamnesis.edit');
+Route::put('/home/{pasien:slug}/{anamnesis}', [AnamnesisController::class, 'update'])->name('anamnesis.update');

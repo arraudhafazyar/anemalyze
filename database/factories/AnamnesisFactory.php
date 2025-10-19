@@ -20,7 +20,7 @@ class AnamnesisFactory extends Factory
     public function definition(): array
     {
         return [
-        'pasien_id' => Pasien::factory(),
+        'pasien_id' => Pasien::inRandomOrder()->first()->id,
         'kehamilan' => fake()->randomElement(['Primigravida', 'Multigravida', 'Nulligravida']),
         'takikardia' => fake()-> boolean(),
         'hipertensi' => fake()-> boolean(),
