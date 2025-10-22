@@ -21,10 +21,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/home/{pasien:slug}/{anamnesis}', [pasienController::class, 'show'])->name('home.show');
+Route::put('/home/{pasien:slug}/{anamnesis}', [AnamnesisController::class, 'update'])->name('anamnesis.update');
 
 
 
 Route::post('/pasien-baru', [AnamnesisController::class, 'store'])->name('anamnesis.store');
 Route::get('/pasien-baru', [pasienController::class, 'create']);
+
+
 Route::get('/home/{pasien:slug}/{anamnesis}/edit', [AnamnesisController::class, 'edit'])->name('anamnesis.edit');
-Route::put('/home/{pasien:slug}/{anamnesis}', [AnamnesisController::class, 'update'])->name('anamnesis.update');
+

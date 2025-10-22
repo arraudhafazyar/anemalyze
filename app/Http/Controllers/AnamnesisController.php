@@ -40,18 +40,25 @@ class AnamnesisController extends Controller
 
     public function update(Request $request, Pasien $pasien, Anamnesis $anamnesis)
     {
-        $validated = $request->validate([
-            'keluhan' => 'required|string',
-            'riwayat' => 'required|string',
-            'takikardia' => 'required|string',
-            'hipertensi' => 'required|string',
-            'merokok' => 'required|string',
-            'transfusi' => 'required|string',
-        ]);
+    $validated = $request->validate([
+        'keluhan' => 'nullable|string',
+        'riwayat' => 'nullable|string',
+        'takikardia' => 'nullable|string',
+        'hipertensi' => 'nullable|string',
+        'merokok' => 'nullable|string',
+        'transfusi' => 'nullable|string',
+    ]);
 
-        $anamnesis->update($validated);
+    $anamnesis->update([
+        'keluhan' => $validated['keluhan'] ?? $anamnesis->keluhan,
+        'kehamilan' => $validated['riwayat'] ?? $anamnesis->kehamilan,
+        'takikardia' => $validated['takikardia'] === 'ya' ? 1 : 0,
+        'hipertensi' => $validated['hipertensi'] === 'ya' ? 1 : 0,
+        'kebiasaan_merokok' => $validated['merokok'] ?? $anamnesis->kebiasaan_merokok,
+        'transfusi_darah' => $validated['transfusi'] === 'ya' ? 1 : 0,
+    ]);
 
-        return redirect()->route('anamnesis.show', [$pasien->id, $anamnesis->id])
-                        ->with('success', 'Data anamnesis berhasil diperbarui!');
+    return redirect()->back()->with('success', 'Data anamnesis berhasil diperbarui.');
     }
+
     }

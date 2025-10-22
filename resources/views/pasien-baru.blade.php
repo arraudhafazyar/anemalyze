@@ -34,11 +34,61 @@
         </div>
         <div class="mx-8">
             <div class="flex space-x-20 flex-wrap mb-4">
-                <x-riwayat-kehamilan></x-riwayat-kehamilan>
-                <x-takikardia></x-takikardia>
-                <x-transfusi-darah></x-transfusi-darah>
-                <x-hipertensi></x-hipertensi>
-                <x-kebiasaan-merokok></x-kebiasaan-merokok> </div>
+                <x-radiobutton label="Riwayat Kehamilan"
+                            name="kehamilan"
+                            :options="[
+                                'Nulligravida' => 'Nulligravida',
+                                'Primigravida' => 'Primigravida',
+                                'Multigravida' => 'Multigravida'
+                            ]"
+                            {{-- :selected="$anamnesis->kehamilan"
+                            :disabled="true" --}}
+                        />{{-- riwayat kehamilan --}}
+                        <x-radiobutton
+                        label="Riwayat Takikardia"
+                        name="takikardia"
+                        :options="[
+                            'ya' => 'Ya',
+                            'tidak' => 'Tidak'
+                        ]"
+                        {{-- :selected="$anamnesis->takikardia == 1 ? 'ya' : 'tidak'"
+                        :disabled="true" --}}
+                        /> {{-- riwayat takikardia --}}
+                        <x-radiobutton
+                            label="Riwayat Hipertensi"
+                            name="hipertensi"
+                            :options="[
+                                'ya' => 'Ya',
+                                'tidak' => 'Tidak'
+                            ]"
+                            {{-- :selected="$anamnesis->hipertensi == 1 ? 'ya' : 'tidak'"
+                            :disabled="true" --}}
+                            />{{-- riwayat hipertensi --}}
+                        </div>
+                <div class="flex space-x-6">
+                        <x-radiobutton
+                            label="Kebiasaan Merokok"
+                            name="kebiasaan_merokok"
+                            :options="[
+                                'Pasif' => 'Perokok pasif',
+                                'Aktif' => 'Perokok aktif',
+                                'Tidak merokok' => 'Tidak merokok'
+                            ]"
+                            {{-- :selected="$anamnesis->kebiasaan_merokok"
+                            :disabled="true" --}}
+                            />  {{-- riwayat merokok --}}
+                        <x-radiobutton
+                            label="Riwayat Transfusi Darah"
+                            name="transfusi"
+                            :options="[
+                                'ya' => 'Ya',
+                                'tidak' => 'Tidak'
+                            ]"
+                            {{-- :selected="$anamnesis->transfusi == 1 ? 'ya' : 'tidak'"
+                            :disabled="true" --}}
+                            />{{-- riwayat transfusi darah --}}
+                </div>
+            </div>
                 <div class="flex justify-end m-4">
                     <div class="rounded-full p-2 px-2 bg-[#73946B] text-white">
                         <i class="fa-solid fa-save"></i>

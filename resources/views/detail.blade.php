@@ -9,9 +9,14 @@
                 <h2 class="m-2" >{{$pasien->phone_number}}</h2>
                 <h2 class="mb-8">{{ \Carbon\Carbon::parse($pasien->tanggal_lahir)->age }} tahun</h2>
             </div>
-                <div class="flex flex-col col-span-2">
+            <div class="flex flex-col col-span-2">
+            <form id="anamnesisForm"
+                method="POST"
+                action="{{ route('anamnesis.update', [$pasien->slug, $anamnesis->id]) }}">
+                @csrf
+                @method('PUT')
                     <p class="font-medium">Detail anamnesis</p>
-                    <textarea name="keluhan" id="keluhan" class="w-full h-32  rounded-lg shadow-xl bg-[#B0DB9C] p-3 active:border-none text-sm"> {{ $anamnesis->keluhan}}</textarea>
+                    <textarea name="keluhan" id="keluhan" class="w-full h-32  rounded-lg shadow-xl bg-[#B0DB9C] p-3 active:border-none text-sm" disabled> {{ $anamnesis->keluhan}}</textarea>
                     <div class="flex space-x-16 mb-4">
                         <x-radiobutton label="Riwayat Kehamilan"
                             name="kehamilan"
@@ -44,13 +49,13 @@
                             :disabled="true"
                             />{{-- riwayat hipertensi --}}
                         </div>
-                <div class="flex space-x-8">
+                <div class="flex space-x-6">
                         <x-radiobutton
                             label="Kebiasaan Merokok"
                             name="kebiasaan_merokok"
                             :options="[
-                                'Perokok pasif' => 'Perokok pasif',
-                                'Perokok aktif' => 'Perokok aktif',
+                                'Pasif' => 'Perokok pasif',
+                                'Aktif' => 'Perokok aktif',
                                 'Tidak merokok' => 'Tidak merokok'
                             ]"
                             :selected="$anamnesis->kebiasaan_merokok"
@@ -66,35 +71,19 @@
                             :selected="$anamnesis->transfusi == 1 ? 'ya' : 'tidak'"
                             :disabled="true"
                             />{{-- riwayat transfusi darah --}}
-                        </div>
+                </div>
                 <div class="flex justify-end m-4 col-span-2">
                     <div class="rounded-full p-2 px-2 bg-[#73946B] text-white">
-                        <i class="fa-solid fa-pencil"></i>
-                        <button id="editPasien" class="text-sm font-semibold">Edit Data</button>
-                    </div>
-                    <div class="rounded-full p-2 px-2 bg-[#73946B] text-white ml-4">
-                        <i class="fa-solid fa-save"></i>
-                        <button id="simpanPasien" class="text-sm font-semibold">Simpan Data</button>
+                        <button id="editPasien" type="button" class="text-sm font-semibold">
+                            <i class="fa-solid fa-pencil"></i> Edit Data</button>
                     </div>
                 </div>
                 </div>
+            </form>
                 </div>
-    <div class="flex justify-between my-4">
+
+    <div class="flex justify-between my-2">
     <div>
-    {{-- <form action="{{ route ('home') }}" method="GET" class="flex items-center gap-2 text-[#888888]" id="filterForm">
-            <h3 class="text-m text-black">Filter Berdasarkan:</h3>
-            <div class="rounded border p-1 px-2 hover:border-[#B0DB9C] ">
-                <label for="tanggal" class="text-sm"></label>
-                <input type="date" name="tanggal" value="{{ request('tanggal') }}">
-            </div>
-            <div class="rounded border p-1 px-2 hover:border-[#B0DB9C]">
-                <select name="status" id="status" class=" text-sm outline-none" >
-                    <option value="Status Anemia" disabled selected>Status Anemia</option>
-                    <option value="Normal" {{ request('status') == 'Normal' ? 'selected' : '' }}>Normal</option>
-                    <option value="Anemia" {{ request('status') == 'Anemia' ? 'selected' : '' }}>Anemia</option>
-                </select>
-            </div>
-        </form> --}}
     </div>
     <div class="flex justify-end m-4">
         <div class="rounded-full p-2 px-2 bg-[#73946B] text-white">
@@ -130,17 +119,22 @@
 </div>
 </div>
 <script>
-document.getElementById('editPasien').addEventListener('click', function() {
+document.getElementById('editPasien').addEventListener('click', function () {
     const form = document.getElementById('anamnesisForm');
-    const isEditing = this.classList.toggle('editing');
+    const inputs = form.querySelectorAll('input, textarea, select');
+    const isEditing = this.dataset.editing === 'true';
 
-    document.querySelectorAll('#anamnesisForm input, #anamnesisForm textarea').forEach(el => {
-        el.disabled = !isEditing;
-    });
-
-    this.textContent = isEditing ? 'Simpan Perubahan' : 'Edit Data';
-    if (!isEditing) form.submit(); // langsung submit ke route update
+    if (!isEditing) {
+        // MASUK MODE EDIT
+        inputs.forEach(el => el.disabled = false);
+        this.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan';
+        this.dataset.editing = 'true';
+    } else {
+        // KELUAR MODE EDIT -> SUBMIT FORM
+        this.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
+        form.submit();
+    }
 });
-
 </script>
+
 </x-layout>
