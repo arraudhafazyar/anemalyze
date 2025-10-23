@@ -42,7 +42,7 @@ class AnamnesisController extends Controller
     {
     $validated = $request->validate([
         'keluhan' => 'nullable|string',
-        'riwayat' => 'nullable|string',
+        'kehamilan' => 'nullable|string',
         'takikardia' => 'nullable|string',
         'hipertensi' => 'nullable|string',
         'merokok' => 'nullable|string',
@@ -51,7 +51,7 @@ class AnamnesisController extends Controller
 
     $anamnesis->update([
         'keluhan' => $validated['keluhan'] ?? $anamnesis->keluhan,
-        'kehamilan' => $validated['riwayat'] ?? $anamnesis->kehamilan,
+        'kehamilan' => $validated['kehamilan'] ?? $anamnesis->kehamilan,
         'takikardia' => $validated['takikardia'] === 'ya' ? 1 : 0,
         'hipertensi' => $validated['hipertensi'] === 'ya' ? 1 : 0,
         'kebiasaan_merokok' => $validated['merokok'] ?? $anamnesis->kebiasaan_merokok,

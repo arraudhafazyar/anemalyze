@@ -87,7 +87,7 @@
     </div>
     <div class="flex justify-end m-4">
         <div class="rounded-full p-2 px-2 bg-[#73946B] text-white">
-            <a href="/pasien-baru"><i class="fa-solid fa-plus"></i>
+            <a href="{{ route('pemeriksaan.create', $pasien->slug) }}"><i class="fa-solid fa-plus"></i>
             <button class="text-sm font-semibold" >Tambah Data</button></a>
         </div>
     </div>
