@@ -8,26 +8,28 @@ use Illuminate\Http\Request;
 
 class AnamnesisController extends Controller
 {
+    public function store(Request $request, Pasien $pasien){
+            $request->validate([
+                'kehamilan'=> 'required|in:Nulligravida, primigravida, Multigravida',
+                'takikardia' => 'required|in:ya,tidak',
+                'hipertensi' => 'required|in:ya,tidak',
+                'transfusi_darah'  => 'required|in:ya,tidak',
+                'kebiasaan_merokok' => 'required|in:Pasif, Aktif, Tidak Merokok',
+                'keluhan' => 'required|string',
+            ]);
 
-    public function store(Request $request){
-        $request->validate([
-            'kehamilan'=> 'required|in:Nulligravida, primigravida, Multigravida',
-            'takikardia' => 'required|in:ya,tidak',
-            'hipertensi' => 'required|in:ya,tidak',
-            'transfusi_darah'  => 'required|in:ya,tidak',
-            'kebiasaan_merokok' => 'required|in:Pasif, Aktif, Tidak Merokok',
-            'keluhan' => 'required|string',
+            Anamnesis::create([
+            'kehamilan' => $request->kehamilan,
+            'takikardia' =>$request->takikardia,
+            'hipertensi' => $request->hipertensi,
+            'transfusi_darah'=> $request->transfusi,
+            'kebiasaan_merokok'=>$request->merokok,
+            'keluhan'=>$request->detail,
         ]);
-
-        Anamnesis::create([
-        'kehamilan' => $request->riwayat,
-        'takikardia' =>$request->takikardia,
-        'hipertensi' => $request->hipertensi,
-        'transfusi_darah'=> $request->transfusi,
-        'kebiasaan_merokok'=>$request->merokok,
-        'keluhan'=>$request->detail,
-    ]);
-    }
+        return redirect()
+        ->route('home.show', ['pasien' => $pasien->slug, 'anamnesis' => $anamnesis->id])
+        ->with('success', 'Data anamnesis berhasil disimpan!');
+        }
 
     public function show(Anamnesis $anamnesis){
         return view('detail', ['title' => 'Detail Pasien', 'anamnesis'=>$anamnesis]);

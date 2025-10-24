@@ -1,49 +1,64 @@
 <?php
 
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers;
 
-use App\Models\Pasien;
-use App\Models\Anamnesis;
-use App\Models\Pemeriksaan;
-use Illuminate\Http\Request;
+    use App\Models\Pasien;
+    use App\Models\Anamnesis;
+    use App\Models\Pemeriksaan;
+    use Illuminate\Http\Request;
 
-class PemeriksaanController extends Controller
-{
-    public function create(Pasien $pasien, Anamnesis $anamneses){
-         $anamneses = $pasien->anamneses()->orderByDesc('created_at')->get();
-
-        return view('measurement', [compact('pasien', 'anamneses'), 'title'=>'Tambah Pengukuran ' . explode (' ', $pasien->name)[0], 'pasien' => $pasien]);
-    }
-    public function store(Request $request, Pasien $pasien)
+    class PemeriksaanController extends Controller
     {
+        public function create(Pasien $pasien){
+            // $anamneses = $pasien->anamneses()->orderByDesc('created_at')->get();
+
+            return view('measurement', ['title'=>'Tambah Pengukuran ' . explode (' ', $pasien->name)[0], 'pasien' => $pasien, 'anamnesis' => null]);
+        }
+        public function store(Request $request, Pasien $pasien)
+    {
+        // 1️⃣ Validasi input manual dari form
         $validated = $request->validate([
-            'anamnesis_id' => 'nullable|exists:anamneses,id',
             'keluhan' => 'nullable|string',
-            'spo2' => 'required|integer|min:0|max:100',
-            'heart_rate' => 'required|integer|min:20|max:300',
+            'kehamilan'=> 'required|in:Nulligravida,Primigravida,Multigravida',
+            'takikardia' => 'required|in:ya,tidak',
+            'hipertensi' => 'required|in:ya,tidak',
+            'transfusi'  => 'required|in:ya,tidak',
+            'kebiasaan_merokok' => 'required|in:Pasif,Aktif,Tidak merokok',
         ]);
 
-        // // jika tidak pilih anamnesis -> buat anamnesis baru
-        // if (empty($validated['anamnesis_id'])) {
-        //     $anamnesis = Anamnesis::create([
-        //         'pasien_id' => $pasien->id,
-        //         'keluhan' => $validated['keluhan'] ?? null,
-        //         // jika field lain wajib, tambahkan di sini
-        //     ]);
-        // } else {
-        //     $anamnesis = Anamnesis::find($validated['anamnesis_id']);
-        // }
+        // 2 Buat anamnesis baru untuk pasien ini
+        $anamnesis = $pasien->anamneses()->create([
+            'keluhan' => $validated['keluhan'] ?? null,
+            'kehamilan' => $validated['kehamilan'],
+            'takikardia' => $validated['takikardia'] === 'ya' ? 1 : 0,
+            'hipertensi' => $validated['hipertensi'] === 'ya' ? 1 : 0,
+            'transfusi_darah' => $validated['transfusi'] === 'ya' ? 1 : 0,
+            'kebiasaan_merokok' => $validated['kebiasaan_merokok'],
+        ]);
 
-        // $pemeriksaan = Pemeriksaan::create([
-        //     'anamnesis_id' => $anamnesis->id,
-        //     'pasien_id' => $pasien->id,  
-        //     'spo2' => $validated['spo2'],
-        //     'heart_rate' => $validated['heart_rate'],
-        //     // 'status_anemia' => (opsional, hitung di sini jika perlu)
+        //  Buat pemeriksaan baru (sementara masih dummy) nanti kaalu sudah ada data dari sensor ganti ini
+        // $pemeriksaan = $anamnesis->pemeriksaan()->create([
+        //     'spo2' => 98, // nanti diganti data dari sensor
+        //     'heart_rate' => 75, // nanti diganti data dari sensor
+        //     'status_anemia' => 'Normal', // nanti diganti hasil model ML kamu
+        //     'pasien_id' => $pasien->id,
         // ]);
 
-        // return redirect()
-        //     ->route('home.show', ['pasien' => $pasien->slug, 'anamnesis' => $anamnesis->id])
-        //     ->with('success', 'Pemeriksaan tersimpan.');
+        // dummy pemeriksaan
+        $pemeriksaan = new \App\Models\Pemeriksaan();
+        $pemeriksaan->spo2 = 98; // nanti diganti data dari sensor
+        $pemeriksaan->heart_rate = 75; // nanti diganti data dari sensor
+        $pemeriksaan->status_anemia = 'Normal'; // nanti diganti hasil model ML kamu
+        $pemeriksaan->pasien_id = $pasien->id; // otomatis dari route
+        $pemeriksaan->anamnesis_id = $anamnesis->id; // hasil yang baru dibuat
+        $pemeriksaan->save();
+
+
+        // Redirect balik ke detail pasien
+        return redirect()
+            ->route('home.show', [$pasien->slug, $anamnesis->id])
+            ->with('success', 'Data berhasil disimpan!');
     }
-}
+
+    }
+

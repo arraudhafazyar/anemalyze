@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class pasienController extends Controller
 {
-    public function create() {
-        return view('pasien-baru', ['title' => 'Tambah Pasien']);
-}
+    public function create(Pasien $pasien){
+        return view('pasien-baru', ['title' => 'Tambah Pasien', 'pasien' => $pasien, 'anamnesis' => null]);
+    }
     public function store(Request $request){
         $request->validate([
         'name' => 'required|string|max:255',
@@ -21,7 +21,7 @@ class pasienController extends Controller
         ]);
     }
 
-    public function show(Pasien $pasien, $anamnesis_id, )
+    public function show(Pasien $pasien, $anamnesis_id)
     {
         #tampilkan anamnesis milik pasien saja
         $anamnesis = $pasien->anamneses()->findOrFail($anamnesis_id); // langsung 404 jika bukan milik pasien
