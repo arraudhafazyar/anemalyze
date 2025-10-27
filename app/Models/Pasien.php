@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pasien extends Model
 {
@@ -14,8 +15,17 @@ class Pasien extends Model
         'name',
         'tempat_lahir',
         'tanggal_lahir',
-        'phone_number'
+        'phone_number',
+        'slug'
     ];
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($pasien) {
+            $pasien->slug = Str::slug($pasien->name . '-' );
+        });
+    }
     public function pemeriksaans(): HasMany{
         return $this->hasMany(Pemeriksaan::class, 'pasien_id');
     }

@@ -12,14 +12,6 @@ class pasienController extends Controller
     public function create(Pasien $pasien){
         return view('pasien-baru', ['title' => 'Tambah Pasien', 'pasien' => $pasien, 'anamnesis' => null]);
     }
-    public function store(Request $request){
-        $request->validate([
-        'name' => 'required|string|max:255',
-        'phone_number'=> 'required|string|max:255',
-        'tempat_lahir' => 'required|string|max:255',
-        'tanggal_lahir' => 'required|date',
-        ]);
-    }
 
     public function show(Pasien $pasien, $anamnesis_id)
     {

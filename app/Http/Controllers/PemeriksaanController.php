@@ -1,5 +1,4 @@
 <?php
-
     namespace App\Http\Controllers;
 
     use App\Models\Pasien;
@@ -45,7 +44,7 @@
         // ]);
 
         // dummy pemeriksaan
-        $pemeriksaan = new \App\Models\Pemeriksaan();
+        $pemeriksaan = new Pemeriksaan();
         $pemeriksaan->spo2 = 98; // nanti diganti data dari sensor
         $pemeriksaan->heart_rate = 75; // nanti diganti data dari sensor
         $pemeriksaan->status_anemia = 'Normal'; // nanti diganti hasil model ML kamu

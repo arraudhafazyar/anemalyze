@@ -13,7 +13,7 @@
                 </div>
                 <div class="flex flex-col">
                     <label for="phone-number">Nomor Telepon</label>
-                    <input type="text" id="phone-number" name="phone-number" class="bg-[#ebe6e6] rounded-full px-3 py-2" value="{{ $pasien->phone_number }}">
+                    <input type="text" id="phone_number" name="phone_number" class="bg-[#ebe6e6] rounded-full px-3 py-2" value="{{ $pasien->phone_number }}">
                 </div>
             </div>
             <div class="mx-4 grid grid-cols-2 mt-4 gap-4">
