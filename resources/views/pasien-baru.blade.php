@@ -1,7 +1,7 @@
 
 <x-layout :title="$title">
     <div class="m-4">
-        <h2 class="rounded-lg bg-[#73946B] text-white font-semibold p-2 px-6 my-4 ">Data Diri Pasien</h2>
+        <h2 class="rounded-lg bg-[#CD5656] text-white font-semibold p-2 px-6 my-4 ">Data Diri Pasien</h2>
         <form action="{{route('anamnesis.store')}}" method="POST" id="pasienBaruForm">
             @csrf
             <div class="mx-4 grid grid-cols-2 gap-4">
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-    <h2 class="rounded-lg bg-[#73946B] text-white font-semibold p-2 px-6 my-4 m-4">Riwayat kesehatan</h2>
+    <h2 class="rounded-lg bg-[#CD5656] text-white font-semibold p-2 px-6 my-4 m-4">Riwayat kesehatan</h2>
         <div class="mx-8 mt-4 grid grid-cols-2 gap-4">
             <div class="flex flex-col col-span-2">
                 <label for="detail">Detail anamnesis</label>
@@ -87,16 +87,22 @@
                             />{{-- riwayat transfusi darah --}}
                 </div>
             </div>
-                <div class="flex justify-end m-4">
+                <div class="flex justify-end m-4 space-x-2">
                     <button id="simpanData" type="button"
-                        class="rounded-full p-2 px-4 bg-[#73946B] text-white flex items-center space-x-2">
+                        class="rounded-full p-2 px-4 bg-[#CD5656] text-white flex items-center space-x-2">
                         <i class="fa-solid fa-save"></i>
                         <span class="text-sm font-semibold">Simpan Data</span>
+                    </button>
+                    <button id="startMeasurement" type="button" onclick="startMeasurement({{ session('pemeriksaan_id') }})"
+                        class="rounded-full p-2 px-4 bg-[#CD5656] text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-play"></i>
+                        <span class="text-sm font-semibold">Mulai Pengukuran</span>
                     </button>
                 </div>
             </div>
         </form>
     </div>
+    
 <script>
 document.getElementById('simpanData').addEventListener('click', function () {
     const button = this;

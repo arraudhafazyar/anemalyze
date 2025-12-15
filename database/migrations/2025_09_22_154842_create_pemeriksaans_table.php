@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('pemeriksaans', function (Blueprint $table) {
             $table->id();
-            $table->integer('heart_rate');
-            $table->integer('spo2');
-            $table->enum('status_anemia', ['Anemia', 'Normal']);
+            $table->integer('spo2')->nullable();  // ← NULLABLE!
+            $table->integer('heart_rate')->nullable();  // ← NULLABLE!
+            $table->string('status_anemia')->nullable();  // ← NULLABLE!
+            $table->decimal('confidence', 5, 2)->nullable();  // ← NULLABLE!
+            $table->string('image_path')->nullable();  // ← NULLABLE!
             $table->foreignId('pasien_id')->constrained(
                 table: 'pasiens',
                 indexName: 'pemeriksaan_pasien_id'

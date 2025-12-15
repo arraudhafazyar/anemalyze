@@ -11,10 +11,10 @@ export default defineConfig({
         tailwindcss(),
     ],
     server: {
-        host: 'anemalyze.test',
+        host: '10.105.45.53',
         port: 5173, // ini port Vite (frontend hot reload)
         hmr: {
-            host: 'anemalyze.test',
+            host: '10.105.45.53',
         },
     },
 });

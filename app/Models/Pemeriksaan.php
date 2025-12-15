@@ -15,7 +15,9 @@ class Pemeriksaan extends Model
     protected $fillable = [
         'heart_rate',
         'spo2',
-        'status_anemia'
+        'status_anemia',
+        'confidence',
+        'image_path'
     ];
     protected $with = ['pasien', 'anamnesis'];
 

@@ -14,11 +14,11 @@
     </form>
         <form action="{{ route ('home') }}" method="GET" class="flex items-center gap-2 text-[#888888]" id="filterForm">
             <h3 class="text-m text-black">Filter Berdasarkan:</h3>
-            <div class="rounded border p-1 px-2 hover:border-[#B0DB9C] ">
+            <div class="rounded border p-1 px-2 hover:border-[#E43636] ">
                 <label for="tanggal" class="text-sm"></label>
                 <input type="date" name="tanggal" value="{{ request('tanggal') }}">
             </div>
-            <div class="rounded border p-1 px-2 hover:border-[#B0DB9C]">
+            <div class="rounded border p-1 px-2 hover:border-[#E43636]">
                 <select name="status" id="status" class=" text-sm outline-none" >
                     <option value="Status Anemia" disabled selected>Status Anemia</option>
                     <option value="Normal" {{ request('status') == 'Normal' ? 'selected' : '' }}>Normal</option>
@@ -28,21 +28,21 @@
         </form>
         <form action="{{ route ('logout') }}" method="POST" class="flex items-start gap-2 text-[#888888] mr-2">
             @csrf
-            <button type="submit" class="rounded border p-1 px-2 hover:border-[#B0DB9C]">
+            <button type="submit" class="rounded border p-1 px-2 hover:border-[#E43636]">
                 <i class="fa-solid fa-right-from-bracket"></i>
             </button>
         </form>
 </div>
 </div>
 <div class="flex justify-end m-4">
-    <div class="rounded-full p-2 px-2 bg-[#73946B] text-white">
+    <div class="rounded-full p-2 px-2 bg-[#CD5656] text-white">
         <a href="/pasien-baru"><i class="fa-solid fa-plus"></i>
         <button class="text-sm font-semibold">Pasien Baru</button></a>
     </div>
 </div>
 <div class="m-4">
 <table class="min-w-full">
-    <thead class="bg-[#B0DB9C] text-white">
+    <thead class="bg-[#E43636] text-white">
     <tr>
         <th class="p-3 text-center text-sm font-semibold w-[10%]">Tanggal</th>
         <th class="p-3 text-center text-sm font-semibold w-[35%]">Nama Pasien</th>

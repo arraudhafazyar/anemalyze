@@ -13,7 +13,7 @@
                     @if($selected == $value) checked @endif
                     @if($disabled) disabled @endif
                 />
-                <span class="w-6 h-6 rounded-full border border-gray-400 bg-gray-200 peer-checked:bg-[#B0DB9C]"></span>
+                <span class="w-6 h-6 rounded-full border border-gray-400 bg-gray-200 peer-checked:bg-[#E43636]"></span>
                 <span>{{ $text }}</span>
             </label>
         @endforeach

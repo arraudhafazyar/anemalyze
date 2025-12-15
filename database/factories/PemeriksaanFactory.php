@@ -24,7 +24,9 @@ class PemeriksaanFactory extends Factory
         'pasien_id' => Anamnesis::inRandomOrder()->first()->pasien_id ?? Pasien::factory(),
         'heart_rate' => fake()->numberBetween(80, 130),
         'spo2' => fake()->numberBetween(90, 100),
-        'status_anemia' => fake()->randomElement(['Anemia', 'Normal'])
+        'status_anemia' => fake()->randomElement(['Anemia', 'Normal']),
+        'confidence' => fake()->randomFloat(2, 0, 100),
+        'image_path' => 'images/' . fake()->uuid() . '.jpg',
         ];
     }
 

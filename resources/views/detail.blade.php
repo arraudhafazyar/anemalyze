@@ -1,8 +1,8 @@
 <x-layout :title="$title">
 <div class="m-4">
-    <h2 class="rounded-lg bg-[#73946B] text-white font-semibold p-2 px-6 my-4 ">Detail pasien</h2>
+    <h2 class="rounded-lg bg-[#CD5656] text-white font-semibold p-2 px-6 my-4 ">Detail pasien</h2>
         <div class=" grid grid-cols-3 gap-4">
-            <div class="rounded col-span-1 shadow-xl bg-[#B0DB9C] flex flex-col items-center">
+            <div class="rounded col-span-1 shadow-xl bg-[#E43636] flex flex-col items-center">
                 <img src="/img/woman-removebg-preview.png" alt="" class="h-35 mt-8 mb-4">
                 <a href="/home/{pasien:slug}"><h2 class="font-bold mb-3">{{ $pasien->name }}</h2></a>
                 <h2 class="m-2">{{ $pasien->tempat_lahir}}, {{ \Carbon\Carbon::parse($pasien->tanggal_lahir)->format('d F Y') }}</h2>
@@ -16,7 +16,7 @@
                 @csrf
                 @method('PUT')
                     <p class="font-medium">Detail anamnesis</p>
-                    <textarea name="keluhan" id="keluhan" class="w-full h-32  rounded-lg shadow-xl bg-[#B0DB9C] p-3 active:border-none text-sm" disabled> {{ $anamnesis->keluhan}}</textarea>
+                    <textarea name="keluhan" id="keluhan" class="w-full h-32  rounded-lg shadow-xl bg-[#E43636] p-3 active:border-none text-sm" disabled> {{ $anamnesis->keluhan}}</textarea>
                     <div class="flex space-x-16 mb-4">
                         <x-radiobutton label="Riwayat Kehamilan"
                             name="kehamilan"
@@ -73,7 +73,7 @@
                             />{{-- riwayat transfusi darah --}}
                 </div>
                 <div class="flex justify-end m-4 col-span-2">
-                    <div class="rounded-full p-2 px-2 bg-[#73946B] text-white">
+                    <div class="rounded-full p-2 px-2 bg-[#CD5656] text-white">
                         <button id="editPasien" type="button" class="text-sm font-semibold">
                             <i class="fa-solid fa-pencil"></i> Edit Data</button>
                     </div>
@@ -86,7 +86,7 @@
     <div>
     </div>
     <div class="flex justify-end m-4">
-        <div class="rounded-full p-2 px-2 bg-[#73946B] text-white">
+        <div class="rounded-full p-2 px-2 bg-[#CD5656] text-white">
             <a href="{{ route('pemeriksaan.create', $pasien->slug) }}"><i class="fa-solid fa-plus"></i>
             <button class="text-sm font-semibold" >Tambah Data</button></a>
         </div>
@@ -94,7 +94,7 @@
     </div>
 
 <table class="min-w-full">
-    <thead class="bg-[#B0DB9C] text-white rounded">
+    <thead class="bg-[#E43636] text-white rounded">
     <tr>
         <th class="p-3 text-center text-sm font-semibold w-[10%]">Tanggal</th>
         <th class="p-3 text-center text-sm font-semibold w-[35%]">Nama Pasien</th>

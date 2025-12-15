@@ -27,10 +27,14 @@ Route::get('/home/{pasien:slug}/tambah', [PemeriksaanController::class, 'create'
 Route::post('/home/{pasien:slug}/tambah', [PemeriksaanController::class, 'store'])->name('pemeriksaan.store');
 
 // route untuk halaman detail
-Route::get('/home/{pasien:slug}/{anamnesis}', action: [pasienController::class, 'show'])->name('home.show');
+Route::get('/home/{pasien:slug}/{anamnesis}', [PasienController::class, 'show'])->name('home.show');
 Route::put('/home/{pasien:slug}/{anamnesis}', [AnamnesisController::class, 'update'])->name('anamnesis.update');
 Route::get('/home/{pasien:slug}/{anamnesis}/edit', [AnamnesisController::class, 'edit'])->name('anamnesis.edit');
 
-//menambahkan pasien baru dari home
+// 🔥 GANTI INI - Pindah ke PemeriksaanController
+Route::post('/home/{pasien:slug}/{anamnesis}/start', [PemeriksaanController::class, 'startMeasurement'])->name('anamnesis.measurement.start');
+Route::post('/home/{pasien:slug}/{anamnesis}/save', [PemeriksaanController::class, 'saveMeasurement'])->name('anamnesis.measurement.save');
+
+// menambahkan pasien baru dari home
 Route::post('/pasien-baru', [AnamnesisController::class, 'store'])->name('anamnesis.store');
-Route::get('/pasien-baru', [pasienController::class, 'create'])->name('pasien.create');
+Route::get('/pasien-baru', [PasienController::class, 'create'])->name('pasien.create');
