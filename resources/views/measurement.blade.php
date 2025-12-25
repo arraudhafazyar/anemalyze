@@ -27,7 +27,7 @@
         
         <h2 class="rounded-lg bg-[#CD5656] text-white font-semibold p-2 px-6 my-4">Riwayat Kesehatan</h2>
         
-        {{-- 🔥 FORM ANAMNESIS (Tampil jika $showForm = true) --}}
+        {{-- FORM ANAMNESIS (Tampil jika $showForm = true) --}}
         @if($showForm)
         <form id="pemeriksaanForm" action="{{ route('pemeriksaan.store', $pasien->slug) }}" method="POST">
             @csrf
@@ -109,7 +109,7 @@
         </form>
         @endif
         
-        {{-- 🔥 TOMBOL MULAI PENGUKURAN --}}
+        {{-- TOMBOL MULAI PENGUKURAN --}}
         @if($hasPendingMeasurement && $currentAnamnesis)
         <div class="mx-8 mb-4">
             <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
@@ -157,6 +157,7 @@
                 <button 
                     id="btn-mulai-pengukuran"
                     data-url="{{ route('anamnesis.measurement.start', ['pasien' => $pasien->slug, 'anamnesis' => $currentAnamnesis->id]) }}"
+                    data-save-url="{{ route('anamnesis.measurement.save', ['pasien' => $pasien->slug, 'anamnesis' => $currentAnamnesis->id]) }}"
                     type="button"
                     class="rounded-full px-6 py-3 bg-[#CD5656] text-white hover:bg-[#b84a4a] flex items-center space-x-2 transition shadow-lg hover:shadow-xl transform hover:scale-105">
                     <i class="fa-solid fa-play"></i>
@@ -167,13 +168,14 @@
         @endif
         
         {{-- Modal Pengukuran --}}
-        @include('components.measurement-modal')
+        @include('components.measurement-streaming')
     </div>
 </x-layout>
 
 {{-- Scripts --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('js/measurement.js') }}"></script>
+<script src="{{ asset('js/measurement-streaming.js') }}"></script>
 
 {{-- Validation Errors --}}
 @if ($errors->any())

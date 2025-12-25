@@ -31,7 +31,7 @@ Route::get('/home/{pasien:slug}/{anamnesis}', [PasienController::class, 'show'])
 Route::put('/home/{pasien:slug}/{anamnesis}', [AnamnesisController::class, 'update'])->name('anamnesis.update');
 Route::get('/home/{pasien:slug}/{anamnesis}/edit', [AnamnesisController::class, 'edit'])->name('anamnesis.edit');
 
-// 🔥 GANTI INI - Pindah ke PemeriksaanController
+// Pindah ke PemeriksaanController
 Route::post('/home/{pasien:slug}/{anamnesis}/start', [PemeriksaanController::class, 'startMeasurement'])->name('anamnesis.measurement.start');
 Route::post('/home/{pasien:slug}/{anamnesis}/save', [PemeriksaanController::class, 'saveMeasurement'])->name('anamnesis.measurement.save');
 

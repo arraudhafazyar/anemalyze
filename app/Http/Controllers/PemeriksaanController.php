@@ -202,57 +202,64 @@ class PemeriksaanController extends Controller
      * Route: POST /home/{pasien:slug}/{anamnesis}/save
      */
     public function saveMeasurement(Request $request, Pasien $pasien, Anamnesis $anamnesis)
-    {
-        try {
-            $validated = $request->validate([
-                'pemeriksaan_id' => 'required|exists:pemeriksaans,id',
-                'status_anemia' => 'required|string',
-                'confidence' => 'required|numeric|min:0|max:100',
-                'heart_rate' => 'required|integer|min:0|max:300',
-                'spo2' => 'required|integer|min:0|max:100',
-                'image_path' => 'nullable|string|max:255'
-            ]);
+{
+    try {
+        $validated = $request->validate([
+            // HAPUS pemeriksaan_id dari validation
+            'status_anemia' => 'required|string',
+            'confidence' => 'required|numeric|min:0|max:100',
+            'heart_rate' => 'required|integer|min:0|max:300',
+            'spo2' => 'required|integer|min:0|max:100',
+            'image_path' => 'nullable|string|max:255'
+        ]);
 
-            $pemeriksaan = Pemeriksaan::findOrFail($validated['pemeriksaan_id']);
+        // CARI pemeriksaan berdasarkan anamnesis_id
+        $pemeriksaan = Pemeriksaan::where('pasien_id', $pasien->id)
+            ->where('anamnesis_id', $anamnesis->id)
+            ->whereNull('status_anemia')
+            ->first();
 
-            // Validasi pemeriksaan milik pasien & anamnesis yang benar
-            if ($pemeriksaan->pasien_id !== $pasien->id || $pemeriksaan->anamnesis_id !== $anamnesis->id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Data pemeriksaan tidak sesuai'
-                ], 403);
-            }
-
-            // 🔥 UPDATE pemeriksaan dengan hasil measurement
-            $pemeriksaan->update([
-                'status_anemia' => ucfirst($validated['status_anemia']),
-                'confidence' => $validated['confidence'],
-                'heart_rate' => $validated['heart_rate'],
-                'spo2' => $validated['spo2'],
-                'image_path' => $validated['image_path'] ?? null,
-            ]);
-
-            Log::info("✓ Measurement saved for pasien: {$pasien->name}, anamnesis_id: {$anamnesis->id}, pemeriksaan_id: {$pemeriksaan->id}");
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Hasil pengukuran berhasil disimpan!',
-                'data' => $pemeriksaan,
-                'redirect_url' => route('pasien.show', ['pasien' => $pasien->slug])
-            ], 200);
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        if (!$pemeriksaan) {
             return response()->json([
                 'success' => false,
-                'message' => 'Data tidak valid: ' . $e->getMessage()
-            ], 422);
-            
-        } catch (\Exception $e) {
-            Log::error('Save Measurement Error: ' . $e->getMessage());
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal menyimpan hasil: ' . $e->getMessage()
-            ], 500);
+                'message' => 'Pemeriksaan tidak ditemukan atau sudah terisi'
+            ], 404);
         }
+
+        // UPDATE pemeriksaan
+        $pemeriksaan->update([
+            'status_anemia' => ucfirst($validated['status_anemia']),
+            'confidence' => $validated['confidence'],
+            'heart_rate' => $validated['heart_rate'],
+            'spo2' => $validated['spo2'],
+            'image_path' => $validated['image_path'] ?? null,
+        ]);
+
+        Log::info("✓ Measurement saved for pasien: {$pasien->name}, pemeriksaan_id: {$pemeriksaan->id}");
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Hasil pengukuran berhasil disimpan!',
+            'data' => $pemeriksaan,
+            // FIX: Tambahkan anamnesis parameter!
+            'redirect_url' => route('home.show', [
+                'pasien' => $pasien->slug,
+                'anamnesis' => $anamnesis->id
+            ])
+        ], 200);
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Data tidak valid: ' . $e->getMessage()
+        ], 422);
+        
+    } catch (\Exception $e) {
+        Log::error('Save Measurement Error: ' . $e->getMessage());
+        return response()->json([
+            'success' => false,
+            'message' => 'Gagal menyimpan hasil: ' . $e->getMessage()
+        ], 500);
     }
+}
 }
