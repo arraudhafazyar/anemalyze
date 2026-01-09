@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===========================================
     // CONFIGURATION
     // ===========================================
-     const API_BASE = 'http://192.168.1.19:5000';
+     const API_BASE = `http://${window.location.hostname}:5000`;
     // Atau gunakan localhost jika test di Raspi:
     // const API_BASE = 'http://localhost:5000';
     

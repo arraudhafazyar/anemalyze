@@ -175,7 +175,6 @@
 {{-- Scripts --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('js/measurement.js') }}"></script>
-<script src="{{ asset('js/measurement-streaming.js') }}"></script>
 
 {{-- Validation Errors --}}
 @if ($errors->any())

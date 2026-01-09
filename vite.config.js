@@ -11,10 +11,10 @@ export default defineConfig({
         tailwindcss(),
     ],
     server: {
-        host: '192.168.1.19',
+        host: '10.35.65.53',
         port: 5173, // ini port Vite (frontend hot reload)
         hmr: {
-            host: '192.168.1.19',
+            host: '10.35.65.53',
         },
     },
 });
