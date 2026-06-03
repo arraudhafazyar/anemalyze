@@ -95,27 +95,27 @@ FLASK API (api.py — AI Model Server)
 ### Login Page
 Secure authentication for medical staff.
 
-![Login Page](docs/screenshots/login.png)
+![Login Page](screenshots/login2.png)
 
 ### Dashboard
 Main patient monitoring table with search and filter by date/anemia status.
 
-![Dashboard](docs/screenshots/dashboard.png)
+![Dashboard](screenshots/dashboard.png)
 
 ### Patient Detail
 Full patient profile with anamnesis, medical history, and measurement records.
 
-![Patient Detail](docs/screenshots/patient-detail.png)
+![Patient Detail](screenshots/detail.png)
 
 ### New Patient Form
 Register a new patient with complete medical anamnesis data.
 
-![New Patient](docs/screenshots/new-patient.png)
+![New Patient](screenshots/pasien-baru.png)
 
 ### Live Camera Preview
 Real-time conjunctiva image capture via Raspberry Pi Camera V3.
 
-![Live Preview](docs/screenshots/live-preview.png)
+![Live Preview](screenshots/live-preview.png)
 
 ---
 
